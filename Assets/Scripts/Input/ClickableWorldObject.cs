@@ -4,11 +4,12 @@ using UnityEngine;
 
 //Used as a passthrough to the click functionality of this gameObject
 //This allows other components active on this gameObject to remain hidden from the UI / Cursor script
-//Existence of this component is usable as a test for the clickability of the gameobject
+//Existence of this component is usable as a test for the clickability of the gameObject
 public class ClickableWorldObject : MonoBehaviour
 {
 
-    //For situations where the location of the click matters, such as picking up or putting down units
+    //This will return the origin of the gameObject + offset, not the click location
+    //For situations where the location of the gameObject matters, such as picking up or putting down units
     [SerializeField] private Vector3 ClickRegisterOffset;
     public Vector3 GetClickRegisterWorld()
     {
