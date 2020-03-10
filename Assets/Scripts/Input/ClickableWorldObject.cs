@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,18 +18,17 @@ public class ClickableWorldObject : MonoBehaviour
     }
 
     //This delegate should be set by other attached components, which will implement logic of clicking on the gameObject
-    public delegate void ClickActionC();
-    public ClickActionC clickAction;
+    public Action clickAction;
 
     //Calls the delegate set by other scripts. The UI / Cursor script should call THIS, not the other scripts directly!
     public void OnClick()
     {
         //Sanity check
-        if (clickAction.GetInvocationList().Length < 1)
+        if (clickAction == null || clickAction.GetInvocationList().Length < 1)
         {
             Debug.Log("On Click called for " + gameObject.name + " without any delegates assigned!");
+            return;
         }
-
         clickAction();
     }
 
