@@ -65,6 +65,8 @@
     <Compile Include="Assets\Scripts\Input\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Input\ClickableWorldObject.cs" />
     <Compile Include="Assets\Scripts\Input\KeyboardMouseInput.cs" />
+    <Compile Include="Assets\Scripts\UI\ButtonClick.cs" />
+    <Compile Include="Assets\Scripts\UI\CompassClick.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Documents/Unity Projects/MightyLordsCastle/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

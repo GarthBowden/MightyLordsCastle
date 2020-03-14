@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class KeyboardMouseInput : MonoBehaviour
 {
@@ -28,14 +29,22 @@ public class KeyboardMouseInput : MonoBehaviour
     //Readability function for checking if the cursor is in the game window
     private bool IsMouseCursorInWindow()
     {
-        return Input.mousePosition.x >= 0 && Input.mousePosition.x < Screen.width && Input.mousePosition.y >= 0 && Input.mousePosition.y < Screen.height;
+        if (Input.mousePosition.x >= 0 && Input.mousePosition.x < Screen.width && Input.mousePosition.y >= 0 && Input.mousePosition.y < Screen.height)
+        {
+            return true;
+        }
+        else
+        {
+            Debug.Log("Mouse outside window!");
+            return false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         //User click on something
-        if(Input.GetButtonDown("Fire1") && IsMouseCursorInWindow())
+        if(Input.GetButtonDown("Fire1") && IsMouseCursorInWindow() && !EventSystem.current.IsPointerOverGameObject())
         {
             //TODO if not UI click...
             //ELSE... world space hit
