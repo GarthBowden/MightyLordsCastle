@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This button method rotates the player world view
 public class CompassClick : ButtonClick
 {
-
+    
     public override void OnClick()
     {
         CameraControl cameraControl = Camera.main.gameObject.GetComponent<CameraControl>();

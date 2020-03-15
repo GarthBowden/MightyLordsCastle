@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonClick : MonoBehaviour
+// abstract parent for all buttons
+public abstract class ButtonClick : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     // Derived classes MUST call this base class if overriding start
     protected virtual void Start()
     {
