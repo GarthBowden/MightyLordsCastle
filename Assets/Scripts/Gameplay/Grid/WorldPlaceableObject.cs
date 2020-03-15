@@ -68,4 +68,27 @@ public class WorldPlaceableObject : MonoBehaviour
     {
         placedObjects.Remove(_gridPosition);
     }
+
+    public static WorldPlaceableObject GetWPOByGridPosition(WorldGridPosition wgp)
+    {
+        WorldPlaceableObject wpo = new WorldPlaceableObject();
+        if(placedObjects.TryGetValue(wgp, out wpo))
+        {
+            return wpo;
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public static WorldPlaceableObject GetWPOByGridPosition(WPO_Layer layer, int x, int y)
+    {
+        WorldGridPosition wgp = new WorldGridPosition();
+        wgp.x = x;
+        wgp.y = y;
+        wgp.layer = layer;
+        return GetWPOByGridPosition(wgp);
+    }
+
+
 }
