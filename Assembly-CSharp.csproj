@@ -62,12 +62,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Gameplay\Grid\Tile.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Grid\WorldGrid.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Grid\WorldPlaceableObject.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Units\UnitMovement.cs" />
     <Compile Include="Assets\Scripts\Input\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Input\ClickableWorldObject.cs" />
     <Compile Include="Assets\Scripts\Input\KeyboardMouseInput.cs" />
     <Compile Include="Assets\Scripts\Input\PlayerControls.cs" />
+    <Compile Include="Assets\Scripts\Library\MLCCoords.cs" />
+    <Compile Include="Assets\Scripts\Library\MLCExtensionMethods.cs" />
+    <Compile Include="Assets\Scripts\Library\Math.cs" />
     <Compile Include="Assets\Scripts\UI\ButtonClick.cs" />
     <Compile Include="Assets\Scripts\UI\CompassClick.cs" />
     <Reference Include="Unity.Timeline.Editor">
