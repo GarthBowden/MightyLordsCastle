@@ -65,9 +65,12 @@ public class WorldGrid : MonoBehaviour
 
     class TilePlace
     {
+        //Whether a path has a wall
         public bool[] path;
+        //Whether a path is allowed -- i.e. not facing edge of map
         public bool[] nonEdge;
         public bool isVisited;
+        //Count of open paths
         private int _openpaths;
         public int openpaths
         {
@@ -158,7 +161,26 @@ public class WorldGrid : MonoBehaviour
             }
         }
     }
-
+    // There might be benefits to refactoring using a class for each edge (ie node) instead of places with open or closed walls
+    // However since the actual maze tiles are going to be from a set of squares with predefined edge possibilities,
+    // it seems like it would introduce another level of complexity to translate from edges to appropriate tiles.
+    class Passage
+    {
+        public bool IsOpen;
+        Vector2Int[] nodes;
+        public Passage()
+        {
+            nodes = new Vector2Int[2];
+        }
+        public Passage(Vector2Int node1, Vector2Int node2)
+        {
+            nodes = new Vector2Int[] {node1, node2 };
+        }
+        public Vector2Int[] GetNodes()
+        {
+            return nodes;
+        }
+    }
     class potentialPathPlace : System.IEquatable<potentialPathPlace>
     {
         public Vector2Int place;
@@ -315,6 +337,41 @@ public class WorldGrid : MonoBehaviour
         tileObject.transform.Translate(new Vector3((float)x * gridSize, 0.0f, (float)y * gridSize), Space.World);
     }
 
+    [SerializeField]
+    public Vector2Int EndTile;
+
+    int[,] tileNumbers;
+    int CountConnected (int count, Vector2Int currentPlace)
+    {
+        TilePlace t = placeMap[currentPlace.x, currentPlace.y];
+        for (int i = 0; i < 4; i++)
+        {
+            if(t.path[i])
+            {
+                Vector2Int p = GetAdjacentPlace(currentPlace, i);
+                TilePlace q = placeMap[p.x, p.y];
+                if(!q.isVisited)
+                {
+                    q.isVisited = true;
+                    tileNumbers[p.x, p.y] += CountConnected(count + 1, p);
+                }
+            }
+        }
+        return count;
+    }
+    public void GenerateDistances(Vector2Int startPlace)
+    {
+        //forks for every multiply connected node
+        //each path returns on dead end
+        //Adds to the tile numbers array. It must be initialized before calling this method
+        //tile visited values must be set to false
+        foreach (TilePlace t in placeMap)
+        {
+            t.isVisited = false;
+        }
+        placeMap[startPlace.x, startPlace.y].isVisited = true;
+        tileNumbers[startPlace.x, startPlace.y] = CountConnected(0, startPlace);
+    }
     public void SpawnTiles()
     {
         Debug.Log("Spawning tiles with grid size: " + gridSize.ToString());
@@ -391,6 +448,7 @@ public class WorldGrid : MonoBehaviour
     {
         GenerateEmptyMap();
         SimpleMazeGen(new Vector2Int(0,0));
+        tileNumbers = new int[MapDimensions.x, MapDimensions.y];
         SpawnTiles();
          
     }
